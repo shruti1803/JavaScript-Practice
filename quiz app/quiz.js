@@ -35,23 +35,42 @@ const submitButton = document.getElementById("nextBtn");
 const scoreElement = document.getElementById("score");
 
 function showQuestion() {
+
+    // variable questionobj stores text from questions array at index currentQuestionIndex
     const questionObj = questions[currentQuestionIndex];
+
+    // we take the textcontent of question element and assign it to question in questionObj
     document.getElementById("question").textContent = questionObj.question;
+
+    // we assign variable optionsDiv to the element with id options
     const optionsDiv = document.getElementById("options");
+
+    // we clear the optionDiv by setting its innerHTML to an empty string
     optionsDiv.innerHTML = "";
 
+    // we loop through each option in the options array of questionObj and create a button for each option
     questionObj.options.forEach(option => {
       const button = document.createElement("button");
       button.textContent = option;
+
+      // we add an onclick event listener to each button that calls the checkAnswer function which checks if the selected option is correct
+
       button.onclick = () => checkAnswer(option);
+
+      // adds the button to the optionsDiv so that it can be displayed on the page
       optionsDiv.appendChild(button);
 });
 }
+
+// function which checks if the selected option is correct and updates the score accordingly
 function checkAnswer(selectedOption) {
   if (selectedOption === questions[currentQuestionIndex].answer) {
     score++;
   }
 };
+
+// function to display next question button and when clicked it increases the currentQuestionIndex
+// and checks if there are more questions to show, if yes it calls showQuestion function otherwise it displays the final score
 document.getElementById("nextBtn").onclick = function () {
   currentQuestionIndex++;
 
@@ -62,4 +81,6 @@ document.getElementById("nextBtn").onclick = function () {
       "Your Score: " + score;
   }
 };
+
+// initial call to display the first question when the page loads
 showQuestion();
